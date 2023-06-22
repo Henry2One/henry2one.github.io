@@ -1,0 +1,566 @@
+/*
+
+ * @Author: Henry2One
+
+*/
+
+
+
+*{
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+body{
+	background: #111;
+	font-family: consolas;
+}
+
+
+/* --------------------- Logo ---------------------------------------------------------------------------- */
+
+.logo img{
+	width: 125px;
+	height: 125px;
+}
+
+/*
+//Responsive
+*/
+@media (max-width: 610px){
+	.logo img{
+		width: 85px;
+		height: 85px;
+	}
+}
+
+/* --------------------- Logo ---------------------------------------------------------------------------- */
+
+
+/* --------------------- nav Bar ------------------------------------------------------------------------- */
+
+/*
+
+ * @Author: Deltaty Code
+ * Youtube: https://www.youtube.com/watch?v=QQlxvj_GKss
+ 
+*/
+
+.menu{font-size: 35px}
+
+.menu nav{background-color: #191919}
+
+.menu nav ul{
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	list-style: none;
+	position: relative;
+	padding: 12px 20px;
+}
+
+.menu-items{display: flex;}
+
+.menu-items li{padding-left: 60px;}
+
+.menu-items li a{
+	display: inline-block;
+	text-decoration: none;
+	color: #fff;
+	text-align: center;
+	transition: 0.15s ease-in-out;
+	position: relative;
+	text-transform: uppercase;
+}
+
+.menu-items li a::after{
+	content: "";
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 25%;
+	height: 1px;
+	background-color: #FFF;
+	transition: 0.15s ease-in-out;
+}
+
+.menu-items li a:hover:after{ width:100%; }
+
+.open-menu, .close-menu{
+	position: absolute;
+	color: #fff;
+	cursor: pointer;
+	font-size: 1.5rem;
+	display: none;
+}
+
+.open-menu{
+	top: 50%;
+	right: 20px;
+	transform: translateY(-50%);
+}
+
+.close-menu{
+	top: 20px;
+	right: 20px;
+}
+
+#check {display: none;}
+
+
+/*
+//Responsive
+*/
+@media (max-width: 610px){
+	.menu-items{
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		width: 80%;
+		height: 100vh;
+		position: fixed;
+		top: 0;
+		right: -100%;
+		z-index: 100;
+		background-color: #111;
+		transition: all 0.2s easy-in-out;
+		font-size: 20px;
+	}
+
+	.menu-items li {margin-top:40px;}
+	.menu-items li a {padding: 10px}
+	.open-menu, .close-menu {display: block;}
+	#check:checked ~ .menu-items {right: 0;}
+}
+
+/* --------------------- nav Bar ------------------------------------------------------------------------- */
+
+
+/* --------------------- my Name ------------------------------------------------------------------------- */
+
+.myName{
+	width: 100%;
+	color: white;
+	text-align: center;
+	padding-top: 5em;
+}
+
+.myName i:nth-child(1){
+	color: #905F00;
+}
+
+.myName i:nth-child(2){
+	color: #24ecff;
+}
+
+.myName i:nth-child(3){
+	color: #e41cf8;
+}
+
+.myName i:nth-child(4){
+	color: #93ff2d;
+}
+
+
+@media (max-width: 610px){
+	.myName{
+		font-size: 10px;
+	}
+}
+
+/* --------------------- my Name ------------------------------------------------------------------------- */
+
+
+
+/* --------------------- Container Load ------------------------------------------------------------------- */
+
+/*
+ *	@Autor: Online Tutorials
+ *	Youtube: https://www.youtube.com/watch?v=1Aq9OJuS3ok
+*/
+
+.bodyLoad{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-height: 50vh;
+}
+
+.containerLoad
+{
+	position: relative;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.containerLoad .ring{
+	position: relative;
+	width: 150px;
+	height: 150px;
+	margin: -30px;
+	border-radius: 50%;
+	border: 4px solid #fff transparent;
+	border-top: 4px solid #24ecff;
+	animation: animate 4s linear infinite;
+}
+
+@keyframes animate{
+	0%{
+		transform: rotate(0deg);
+	}
+	100%{
+		transform: rotate(360deg);
+	}
+}
+
+.containerLoad .ring::before{
+	content: '';
+	position: absolute;
+	top: 12px;
+	right: 12px;
+	border-radius: 50%;
+	width: 15px;
+	height: 15px;
+	background: #24ecff;
+	box-shadow: 0 0 0 5px #24ecff33,  
+	0 0 0 10px #24ecff22,
+	0 0 0 20px #24ecff11,
+	0 0 20px #24ecff,
+	0 0 50px #24ecff;
+}
+
+.containerLoad .ring:nth-child(2){
+	animation: animate2 4s linear infinite;
+	animation-delay: -1s;
+	border-top: 4px solid transparent;
+	border-left: 4px solid #93ff2d;
+}
+
+.containerLoad .ring:nth-child(2)::before{
+	content: '';
+	position: absolute;
+	top: initial;
+	bottom: 12px;
+	left: 12px;
+	border-radius: 50%;
+	width: 15px;
+	height: 15px;
+	background: #93ff2d;
+	box-shadow: 0 0 0 5px #93ff2d33,  
+	0 0 0 10px #93ff2d22,
+	0 0 0 20px #93ff2d11,
+	0 0 20px #93ff2d,
+	0 0 50px #93ff2d;
+}
+
+@keyframes animate2{
+	0%{
+		transform: rotate(360deg);
+	}
+	100%{
+		transform: rotate(0deg);
+	}
+}
+
+.containerLoad .ring:nth-child(3){
+	animation: animate2 4s linear infinite;
+	animation-delay: -3s;
+	position: absolute;
+	top: -66.66px;
+	border-top: 4px solid transparent;
+	border-left: 4px solid #e41cf8;
+}
+
+.containerLoad .ring:nth-child(3)::before{
+	content: '';
+	position: absolute;
+	top: initial;
+	bottom: 12px;
+	left: 12px;
+	border-radius: 50%;
+	width: 15px;
+	height: 15px;
+	background: #e41cf8;
+	box-shadow: 0 0 0 5px #e41cf833,  
+	0 0 0 10px #e41cf822,
+	0 0 0 20px #e41cf811,
+	0 0 20px #e41cf8,
+	0 0 50px #e41cf8;
+}
+
+.containerLoad p{
+	position: absolute;
+	color: #fff;
+	font-size: 1.5em;
+	font-family: consolas;
+	bottom: -80px;
+	letter-spacing: 0.15em;
+}
+
+/* --------------------- Container Load ------------------------------------------------------------------- */
+
+/* --------------------- Section 1 - Index----------------------------------------------------------------- */
+
+/*
+ *	Cube @Autor: Online Tutorials
+ *	Youtube: https://www.youtube.com/watch?v=nOdDtnHWaDo
+*/
+
+.sec1{
+	background-color: #191919;
+	display: flex;
+	justify-content: block;
+	min-height: 100vh;
+	width: 100%;
+}
+
+.sec1 .sec1_child1{
+	display: flex;
+	width: 30%;
+	align-items: center;
+	justify-content: center;
+	color: white;
+	font-size: 3em;
+}
+
+.sec1 .sec1_child2{
+	width: 70%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.cube{
+	position: relative;
+	width: 300px;
+	height: 300px;
+	transform-style: preserve-3d;
+	/*transform: rotateX(-30deg);*/
+	animation: cubeAnimate 4s linear infinite;
+}
+
+@keyframes cubeAnimate{
+	0%{
+		transform: rotateX(-30deg) rotateY(0deg);
+	}
+	100%{
+		transform: rotateX(-30deg) rotateY(360deg);
+	}
+}
+
+.cube div{
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	transform-style: preserve-3d;
+}
+
+.cube div span{
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: linear-gradient(#151515, #ff0000);
+	transform: rotateY(calc(90deg * var(--i))) translateZ(150px);
+}
+
+.top {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 300px;
+	height: 300px;
+	background: #222;
+	transform: rotateX(90deg) translateZ(150px);
+}
+
+.top::before{
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 300px;
+	height: 300px;
+	background: #f00;
+	transform: translateZ(-380px);
+	filter: blur(20px);
+	box-shadow: 0 0 120px rgba(60,0,0,0.2), 
+	0 0 200px rgba(60, 0, 0, 0.4),
+	0 0 200px rgba(60, 0, 0, 0.6),
+	0 0 200px rgba(60, 0, 0, 0.8),
+	0 0 200px rgba(60, 0, 0, 1);
+}
+
+.i_sec1_child1{
+	color: #ff246f;
+}
+
+
+/*
+//Responsive
+*/
+@media (max-width: 610px){
+
+	.sec1{
+		display: block;
+		padding: 20px;
+	}
+
+	.sec1 .sec1_child1 {
+		width: 100%;
+		height: 35%;
+		font-size: 20px;
+		text-align: center;
+		padding: 0px 15px;
+	}
+
+	.sec1 .sec1_child2 {
+		width: 100%;
+		height: 65%;
+		margin-top: 60%;
+	}
+
+	.cube{
+		width: 150px;
+		height: 150px;
+	}
+
+	.cube div span{
+		transform: rotateY(calc(90deg * var(--i))) translateZ(75px);
+	}
+
+	.top {
+		width: 150px;
+		height: 150px;
+		transform: rotateX(90deg) translateZ(75px);
+	}
+
+	.top::before{
+		width: 150px;
+		height: 150px;
+		transform: translateZ(-190px);
+		filter: blur(10px);
+		box-shadow: 0 0 60px rgba(60,0,0,0.2), 
+		0 0 100px rgba(60, 0, 0, 0.4),
+		0 0 100px rgba(60, 0, 0, 0.6),
+		0 0 100px rgba(60, 0, 0, 0.8),
+		0 0 100px rgba(60, 0, 0, 1);
+	}
+
+}
+
+
+/* --------------------- Section 1 - Index----------------------------------------------------------------- */
+
+/* --------------------- Section 2 - Index----------------------------------------------------------------- */
+
+/*
+ *	Cube @Autor: Online Tutorials
+ *	Youtube: https://www.youtube.com/watch?v=TQyOL1u10EI
+*/
+
+.sec2{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-height: 100vh;
+	overflow: hidden;
+}
+
+.containerBox{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.containerBox .box{
+	transform-style: preserve-3d;
+	animation: animateBox 25s linear infinite;
+}
+
+@keyframes animateBox{
+	0%{
+		transform: perspective(1000px) rotateX(0deg) rotate(25deg);
+	}
+	100%{
+		transform: perspective(1000px) rotateX(360deg) rotate(25deg);
+	}
+}
+
+.containerBox .box span{
+	position: absolute;
+	color: #fff;
+	font-size: 3.5em;
+	white-space: nowrap;
+	text-transform: uppercase;
+	font-weight: 900;
+	padding: 0 10px;
+	background: linear-gradient(90deg,transparent,rgba(0, 0, 0, 0.5));
+	line-height: 0.76em;
+	transform-style: preserve-3d;
+	text-shadow: 0 5px 15px rgba(0.0.0.0.25);
+	transform: translate(-50%,-50%) rotateX(calc(var(--ibox) * 22.5deg)) translateZ(150px);
+	/* 360/16 = 22.5  */
+}
+
+.containerBox .box span i:nth-child(1){
+	font-style: initial;
+	color: #ff246f;
+}
+
+.containerBox .box span i:nth-child(2){
+	font-style: initial;
+	color: #12b5ff;
+}
+
+/*
+//Responsive
+*/
+@media (max-width: 610px){
+	.containerBox .box span{
+		font-size: 1.75em;
+		padding: 0 5px;
+		transform: translate(-50%,-50%) rotateX(calc(var(--ibox) * 22.5deg)) translateZ(75px);
+	}
+}
+
+/* --------------------- Section 2 - Index----------------------------------------------------------------- */
+
+/* --------------------- Footer - Index-------------------------------------------------------------------- */
+
+footer{
+	background-color: #191919;
+	display: block;
+	text-align: center;
+	padding-top: 2em;
+	min-height: 20vh;
+	width: 100%;
+	color: white;
+	font-size: 2em;
+}
+
+footer .f_varRes{
+	color: #ff246f;
+}
+
+footer .f_opeRes{
+	color: #f00;
+}
+
+footer .f_opeCom{
+	color: #93ff2d;
+}
+
+@media (max-width: 610px){
+	footer{
+		font-size: 1em;
+	}
+}
+/* --------------------- Footer - Index-------------------------------------------------------------------- */
