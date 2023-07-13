@@ -808,7 +808,6 @@ footer .f_opeCom{
 
 .projects_section2 div:nth-child(2) section{
 	position: relative;
-	width: 100%;
 	min-height: 100vh;
 	background: url(./images/ReactNodejsMongo.jpeg);
 	background-size: cover;
@@ -1060,6 +1059,22 @@ footer .f_opeCom{
 		margin: 0;
 		padding: 0;
 		font-size: 2.5em;
+	}
+
+	.contactMe h1 span{
+	display: table-cell;
+	margin: 0;
+	padding: 0;
+	animation: none;
+	color: #fff;
+	filter: blur(2px);
+	text-shadow: 0 0 10px #00b3ff,
+	0 0 20px #00b3ff,
+	0 0 40px #00b3ff,
+	0 0 80px #00b3ff,
+	0 0 120px #00b3ff,
+	0 0 300px #00b3ff,
+	0 0 400px #00b3ff
 	}
 
 }
