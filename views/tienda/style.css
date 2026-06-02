@@ -1,0 +1,143 @@
+/* Variables para facilitar ajustes */
+:root {
+    --glass-bg: rgba(255, 255, 255, 0.08);
+    --glass-border: rgba(255, 255, 255, 0.2);
+    --text-color: #ffffff;
+}
+
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #1a1a2e;
+    /* Fondo principal oscuro */
+    color: var(--text-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* Formas geométricas abstractas en el fondo */
+.background-shape {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(90px);
+    z-index: -1;
+}
+
+.shape-1 {
+    width: 450px;
+    height: 450px;
+    background: #e94560;
+    top: -100px;
+    left: -150px;
+}
+
+.shape-2 {
+    width: 500px;
+    height: 500px;
+    background: #0f3460;
+    bottom: -150px;
+    right: -100px;
+}
+
+/* === Efecto Glassmorphism === */
+.glass-panel {
+    background: var(--glass-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    /* Soporte para Safari */
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+.container {
+    width: 90%;
+    max-width: 900px;
+    padding: 40px;
+    text-align: center;
+    margin: 40px 0;
+}
+
+header h1 {
+    margin-top: 0;
+    font-size: 2.5rem;
+    letter-spacing: 1px;
+}
+
+header p {
+    font-size: 1.1rem;
+    opacity: 0.8;
+}
+
+/* Cuadrícula de Cursos */
+.courses-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    margin-top: 50px;
+}
+
+.course-card {
+    padding: 30px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.course-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+}
+
+.course-card h2 {
+    margin: 0 0 10px 0;
+    font-size: 1.5rem;
+}
+
+.course-card p {
+    font-size: 0.95rem;
+    opacity: 0.9;
+    flex-grow: 1;
+    /* Empuja el precio y botón hacia abajo */
+}
+
+.price {
+    display: block;
+    font-size: 1.6rem;
+    font-weight: bold;
+    margin: 20px 0;
+    color: #4cd137;
+    /* Color verde para el precio */
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Espacio reservado para el botón de PayPal */
+.paypal-slot {
+    width: 100%;
+    min-height: 45px;
+    /* Altura mínima similar a un botón real */
+    margin-top: 10px;
+}
+
+/* Botón falso de muestra */
+.mock-btn {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    background-color: #ffc439;
+    color: #000;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.mock-btn:hover {
+    background-color: #f4b829;
+}
