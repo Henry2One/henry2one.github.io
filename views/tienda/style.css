@@ -141,3 +141,17 @@ header p {
 .mock-btn:hover {
     background-color: #f4b829;
 }
+
+/* Estilos para las imágenes de los cursos */
+.course-img {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    /* Ajusta la imagen sin deformarla */
+    border-radius: 12px;
+    margin-bottom: 15px;
+
+    /* Efecto visual de carga mientras la URL está vacía */
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
