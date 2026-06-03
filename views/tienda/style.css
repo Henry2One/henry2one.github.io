@@ -155,3 +155,32 @@ header p {
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
+
+/* === Botón de Home === */
+.home-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    text-decoration: none;
+    color: var(--text-color);
+    font-weight: bold;
+    font-size: 0.9rem;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    align-self: flex-start;
+    /* Lo alinea a la izquierda si el contenedor usa flexbox */
+    transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.home-btn:hover {
+    transform: translateX(-5px);
+    /* Se mueve ligeramente a la izquierda para invitar a "regresar" */
+    background: rgba(255, 255, 255, 0.15);
+    /* Se ilumina un poco al pasar el cursor */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.home-btn .icon {
+    font-size: 1.1rem;
+}
