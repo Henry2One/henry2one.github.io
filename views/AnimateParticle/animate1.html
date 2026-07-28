@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Cosmic Particles Morphing</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background: #000;
+            font-family: sans-serif;
+        }
+
+        #ui {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            z-index: 10;
+        }
+
+        button {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            color: white;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 20px;
+            backdrop-filter: blur(5px);
+        }
+
+        button:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        #info {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="info">Esfera Cósmica</div>
+    <div id="ui">
+        <button id="btnPrev">Anterior</button>
+        <button id="btnNext">Siguiente</button>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/EffectComposer.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/RenderPass.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/ShaderPass.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/CopyShader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/LuminosityHighPassShader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/UnrealBloomPass.js"></script>
+
+    <script>
+        const COUNT = 20000;
+        const names = ["Esfera Cósmica", "Galaxia Espiral", "Anillo Toroide"];
+        let scene, camera, renderer, composer, particleSystem, particleGeometry;
+        let currentShape = 0, targetShape = 0, isTransitioning = false, morphProgress = 0;
+
+        function createSphere() {
+            const arr = new Float32Array(COUNT * 3);
+            for (let i = 0; i < COUNT; i++) {
+                const u = Math.random(), v = Math.random();
+                const theta = u * 2.0 * Math.PI, phi = Math.acos(2.0 * v - 1.0);
+                const r = 4 + Math.random() * 0.5;
+                arr[i * 3] = r * Math.sin(phi) * Math.cos(theta);
+                arr[i * 3 + 1] = r * Math.sin(phi) * Math.sin(theta);
+                arr[i * 3 + 2] = r * Math.cos(phi);
+            }
+            return arr;
+        }
+
+        function createGalaxy() {
+            const arr = new Float32Array(COUNT * 3);
+            for (let i = 0; i < COUNT; i++) {
+                const r = Math.random() * 8;
+                const arms = 3;
+                const theta = (i % arms) * ((2 * Math.PI) / arms) + r * 0.8 + (Math.random() - 0.5) * 0.5;
+                arr[i * 3] = r * Math.cos(theta);
+                arr[i * 3 + 1] = (Math.random() - 0.5) * 0.8;
+                arr[i * 3 + 2] = r * Math.sin(theta);
+            }
+            return arr;
+        }
+
+        function createTorus() {
+            const arr = new Float32Array(COUNT * 3);
+            const R = 5, r = 1.5;
+            for (let i = 0; i < COUNT; i++) {
+                const u = Math.random() * Math.PI * 2;
+                const v = Math.random() * Math.PI * 2;
+                arr[i * 3] = (R + r * Math.cos(v)) * Math.cos(u);
+                arr[i * 3 + 1] = r * Math.sin(v);
+                arr[i * 3 + 2] = (R + r * Math.cos(v)) * Math.sin(u);
+            }
+            return arr;
+        }
+
+        const shapes = [createSphere(), createGalaxy(), createTorus()];
+        const TOTAL_SHAPES = shapes.length;
+
+        function init() {
+            scene = new THREE.Scene();
+            camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+            updateCameraZ();
+
+            renderer = new THREE.WebGLRenderer({ antialias: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            document.body.appendChild(renderer.domElement);
+
+            const renderScene = new THREE.RenderPass(scene, camera);
+            const bloomPass = new THREE.UnrealBloomPass(
+                new THREE.Vector2(window.innerWidth, window.innerHeight),
+                1.5, 0.4, 0.85
+            );
+            bloomPass.threshold = 0;
+            bloomPass.strength = 1.2;
+            bloomPass.radius = 0.5;
+
+            composer = new THREE.EffectComposer(renderer);
+            composer.addPass(renderScene);
+            composer.addPass(bloomPass);
+
+            particleGeometry = new THREE.BufferGeometry();
+            const initialPositions = new Float32Array(shapes[0]);
+            particleGeometry.setAttribute('position', new THREE.BufferAttribute(initialPositions, 3));
+
+            const particleMaterial = new THREE.PointsMaterial({
+                color: 0x66aaff,
+                size: 0.035,
+                transparent: true,
+                blending: THREE.AdditiveBlending
+            });
+
+            particleSystem = new THREE.Points(particleGeometry, particleMaterial);
+            scene.add(particleSystem);
+
+            document.getElementById('btnPrev').addEventListener('click', () => triggerMorph(-1));
+            document.getElementById('btnNext').addEventListener('click', () => triggerMorph(1));
+            window.addEventListener('resize', onWindowResize);
+
+            animate();
+        }
+
+        function updateCameraZ() {
+            camera.position.z = window.innerWidth < 768 ? 14 : 10;
+        }
+
+        function updateInfo(index) {
+            document.getElementById('info').innerText = names[index];
+        }
+
+        function triggerMorph(direction) {
+            if (!isTransitioning) {
+                targetShape = (currentShape + direction + TOTAL_SHAPES) % TOTAL_SHAPES;
+                isTransitioning = true;
+                morphProgress = 0;
+                updateInfo(targetShape);
+            }
+        }
+
+        function onWindowResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            updateCameraZ();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            composer.setSize(window.innerWidth, window.innerHeight);
+        }
+
+        function easeInOutCubic(t) {
+            return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+        }
+        function animate() {
+            requestAnimationFrame(animate);
+
+            if (isTransitioning) {
+                morphProgress += 0.012;
+                if (morphProgress >= 1) {
+                    morphProgress = 1;
+                    isTransitioning = false;
+                    currentShape = targetShape;
+                }
+
+                const currentArr = shapes[currentShape];
+                const targetArr = shapes[targetShape];
+                const pos = particleGeometry.attributes.position.array;
+                const t = easeInOutCubic(morphProgress);
+
+                for (let i = 0; i < COUNT * 3; i++) {
+                    pos[i] = currentArr[i] + (targetArr[i] - currentArr[i]) * t;
+                }
+                particleGeometry.attributes.position.needsUpdate = true;
+            }
+
+            particleSystem.rotation.y += 0.0015;
+            particleSystem.rotation.x += 0.0005;
+
+            composer.render();
+        }
+
+        init();
+    </script>
+</body>
+
+</html>
