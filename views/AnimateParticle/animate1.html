@@ -45,6 +45,27 @@
             letter-spacing: 2px;
             text-transform: uppercase;
         }
+
+        @media (max-width: 768px) {
+            #ui {
+                bottom: 40px;
+                width: 90%;
+                justify-content: center;
+                gap: 15px;
+            }
+
+            button {
+                padding: 14px 20px;
+                font-size: 16px;
+                flex: 1;
+                max-width: 160px;
+            }
+
+            #info {
+                font-size: 14px;
+                top: 40px;
+            }
+        }
     </style>
 </head>
 
@@ -64,9 +85,10 @@
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/UnrealBloomPass.js"></script>
 
     <script>
-        const COUNT = 20000;
+        const isMobile = window.innerWidth < 768;
+        const COUNT = isMobile ? 15000 : 40000;
         const names = ["Esfera Cósmica", "Galaxia Espiral", "Anillo Toroide"];
-        let scene, camera, renderer, composer, particleSystem, particleGeometry;
+        let scene, camera, renderer, composer, particleSystem, particleGeometry, particleMaterial;
         let currentShape = 0, targetShape = 0, isTransitioning = false, morphProgress = 0;
 
         function createSphere() {
@@ -116,29 +138,34 @@
             camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
             updateCameraZ();
 
-            renderer = new THREE.WebGLRenderer({ antialias: true });
+            renderer = new THREE.WebGLRenderer({
+                antialias: false,
+                powerPreference: "high-performance"
+            });
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, isMobile ? 1.5 : 2));
             renderer.setSize(window.innerWidth, window.innerHeight);
-            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
             document.body.appendChild(renderer.domElement);
 
             const renderScene = new THREE.RenderPass(scene, camera);
-            const bloomPass = new THREE.UnrealBloomPass(
-                new THREE.Vector2(window.innerWidth, window.innerHeight),
-                1.5, 0.4, 0.85
+            const bloomResolution = new THREE.Vector2(
+                isMobile ? window.innerWidth / 2 : window.innerWidth,
+                isMobile ? window.innerHeight / 2 : window.innerHeight
             );
+
+            const bloomPass = new THREE.UnrealBloomPass(bloomResolution, 1.5, 0.4, 0.85);
             bloomPass.threshold = 0;
             bloomPass.strength = 1.2;
             bloomPass.radius = 0.5;
 
             composer = new THREE.EffectComposer(renderer);
-            composer.addPass(renderScene);
+            composer.addPass(new THREE.RenderPass(scene, camera));
             composer.addPass(bloomPass);
 
             particleGeometry = new THREE.BufferGeometry();
             const initialPositions = new Float32Array(shapes[0]);
             particleGeometry.setAttribute('position', new THREE.BufferAttribute(initialPositions, 3));
 
-            const particleMaterial = new THREE.PointsMaterial({
+            particleMaterial = new THREE.PointsMaterial({
                 color: 0x66aaff,
                 size: 0.035,
                 transparent: true,
@@ -156,7 +183,13 @@
         }
 
         function updateCameraZ() {
-            camera.position.z = window.innerWidth < 768 ? 14 : 10;
+            const aspect = window.innerWidth / window.innerHeight;
+
+            if (aspect < 1) {
+                camera.position.z = 12 / aspect;
+            } else {
+                camera.position.z = 12;
+            }
         }
 
         function updateInfo(index) {
@@ -173,11 +206,19 @@
         }
 
         function onWindowResize() {
-            camera.aspect = window.innerWidth / window.innerHeight;
+            const width = window.innerWidth;
+            const height = window.innerHeight;
+            const isMobileNow = width < 768;
+
+            camera.aspect = width / height;
             camera.updateProjectionMatrix();
             updateCameraZ();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            composer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setSize(width, height);
+            composer.setSize(width, height);
+
+            if (particleMaterial) {
+                particleMaterial.size = isMobileNow ? 0.045 : 0.035;
+            }
         }
 
         function easeInOutCubic(t) {
