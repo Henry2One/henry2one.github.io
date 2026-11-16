@@ -11,7 +11,6 @@ Personal developer portfolio and project showcase built with a lightweight, modu
 ## Live Site & Featured Demos
 
 * **Main Portfolio:** [https://henry2one.github.io/](https://henry2one.github.io/)
-* **Bruma & Lúpulo (Corporate Craft Brewery UI):** [Live Demo](https://henry2one.github.io/views/cerveceria/index.html)
 * **Interactive Particle Lab:** [Live Demo](https://henry2one.github.io/views/AnimateParticle/animate1.html)
 
 ---
