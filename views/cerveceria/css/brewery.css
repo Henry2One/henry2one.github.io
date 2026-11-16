@@ -1,0 +1,143 @@
+/* ==========================================================================
+   BRUMA & LÚPULO - ESTILOS CORPORATIVOS (CERVECERÍA ARTESANAL)
+   ========================================================================== */
+
+:root {
+  --brewery-dark: #1c140d;
+  --brewery-brown: #2c1e12;
+  --brewery-amber: #d9822b;
+  --brewery-amber-hover: #bf6d1b;
+  --brewery-cream: #faf6f0;
+  --brewery-gold-soft: #f3e5d0;
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background-color: #ffffff;
+  color: #2b2520;
+}
+
+.brand-font {
+  font-family: 'Cinzel', serif;
+  letter-spacing: 0.5px;
+}
+
+/* Colores utilitarios */
+.text-amber {
+  color: var(--brewery-amber) !important;
+}
+
+.bg-amber {
+  background-color: var(--brewery-amber) !important;
+}
+
+.bg-cream {
+  background-color: var(--brewery-cream);
+}
+
+.border-amber-subtle {
+  border-color: #e6d3bd !important;
+}
+
+.btn-amber {
+  background-color: var(--brewery-amber);
+  color: #1c140d;
+  border: none;
+  transition: all 0.25s ease;
+}
+
+.btn-amber:hover {
+  background-color: var(--brewery-amber-hover);
+  color: #ffffff;
+}
+
+.btn-outline-amber {
+  color: var(--brewery-amber);
+  border-color: var(--brewery-amber);
+}
+
+.btn-outline-amber:hover {
+  background-color: var(--brewery-amber);
+  color: #1c140d;
+}
+
+/* Navbar */
+.brewery-nav {
+  background-color: var(--brewery-dark);
+  border-bottom: 2px solid var(--brewery-amber);
+}
+
+.brewery-nav .nav-link {
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.8);
+  transition: color 0.2s;
+}
+
+.brewery-nav .nav-link:hover,
+.brewery-nav .nav-link.active {
+  color: var(--brewery-amber);
+}
+
+/* Hero principal */
+.hero-brewery {
+  min-height: 75vh;
+  background: linear-gradient(rgba(28, 20, 13, 0.76), rgba(28, 20, 13, 0.86)),
+              url('https://images.unsplash.com/photo-1571613316887-6f8d5cbf7ef7?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
+}
+
+.subpage-header {
+  background: linear-gradient(rgba(28, 20, 13, 0.85), rgba(44, 30, 18, 0.92)),
+              url('https://images.unsplash.com/photo-1559526324-4b87b5e36e44?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
+  border-bottom: 3px solid var(--brewery-amber);
+}
+
+.section-heading {
+  color: var(--brewery-brown);
+  font-weight: 700;
+}
+
+/* Listas y tarjetas */
+.brewery-list .list-group-item {
+  background: transparent;
+  padding-left: 0;
+  border-color: #eee4d8;
+}
+
+.service-card {
+  background-color: var(--brewery-cream);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.service-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 24px rgba(44, 30, 18, 0.1) !important;
+}
+
+.icon-box {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background-color: var(--brewery-gold-soft);
+  color: var(--brewery-amber-hover);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+}
+
+/* Galería */
+.gallery-img {
+  height: 220px;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.gallery-card:hover .gallery-img {
+  transform: scale(1.06);
+}
+
+/* Footer */
+.brewery-footer {
+  background-color: var(--brewery-dark);
+  border-top: 2px solid var(--brewery-amber);
+}

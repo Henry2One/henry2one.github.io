@@ -98,5 +98,16 @@ const PROJECTS_DATA = [
     stack: ["Python", "OpenGL", "MediaPipe", "Pygame-ce"],
     repoUrl: "https://github.com/Henry2One",
     demoUrl: "views/AnimateParticle/animate1.html"
+  },
+
+  {
+    title: "Bruma & Lúpulo — Corporate Craft Brewery Website",
+    category: "fullstack",
+    categoryLabel: "Web Design & UI",
+    description: "Multi-page corporate website for a craft brewery featuring responsive Bootstrap 5 layouts, brand storytelling, production process gallery, and an interactive B2B/event inquiry form.",
+    image: "assets/img/cerveceria.png",
+    stack: ["HTML5", "CSS3", "Bootstrap 5", "Responsive UI"],
+    repoUrl: "https://github.com/Henry2One/henry2one.github.io/tree/main/views/cerveceria",
+    demoUrl: "views/cerveceria/index.html"
   }
 ];
